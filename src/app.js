@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 const helmet = require('helmet');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
@@ -17,6 +18,11 @@ const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100, // limit each IP to 100 requests per windowMs
 });
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log('Connected to MongoDB'))
+    .catch((error) => console.error('Error connecting to MongoDB:', error));
 
 // Set security headers
 app.use(helmet());

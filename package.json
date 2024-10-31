@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node ./src/app.js"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,7 @@
     "express-session": "^1.18.1",
     "helmet": "^8.0.0",
     "hpp": "^0.2.3",
+    "mongoose": "^8.7.3",
     "xss-clean": "^0.1.4"
   }
 }
