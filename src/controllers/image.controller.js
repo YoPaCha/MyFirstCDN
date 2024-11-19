@@ -14,7 +14,7 @@ exports.getImageById = (req, res) => {
     try {
         const imageId = parseInt(req.params.id);
 
-        const image = Image.find(img => img.id === imageId);
+        const image = images.find(img => img.id === imageId);
 
         if (!image) {
             return res.status(404).json({ message: "Image not found" });
@@ -44,11 +44,12 @@ exports.getImagesByUserId = (req, res) => {
 
 exports.uploadImage = (req, res) => {
     try {
-        const { userId } = req.body;
+        let { userId } = req.body;
 
         // Validate userId
         if (!userId) {
-            return res.status(400).json({ message: "User ID is required" });
+            userId = 1; 
+            //return res.status(400).json({ message: "User ID is required" });
         }
 
         const newImage = {
@@ -58,7 +59,7 @@ exports.uploadImage = (req, res) => {
             uploadedAt: new Date()
         };
 
-        Image.push(newImage);
+        images.push(newImage);
 
         res.status(201).json(newImage);
     } catch (error) {
@@ -70,13 +71,13 @@ exports.deleteImage = (req, res) => {
     try {
         const imageId = parseInt(req.params.id);
 
-        const index = Image.findIndex(img => img.id === imageId);
+        const index = images.findIndex(img => img.id === imageId);
 
         if (index === -1) {
             return res.status(404).json({ message: "Image not found" });
         }
 
-        Image.splice(index, 1);
+        images.splice(index, 1);
 
         res.status(200).json({ message: "Image deleted successfully" });
     } catch (error) {

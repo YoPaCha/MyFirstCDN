@@ -8,7 +8,7 @@ const imageController = require("../controllers/image.controller");
 // Set up storage for uploaded images
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'images/'); // Specify the destination folder for uploads
+        cb(null, 'data/images/'); // Specify the destination folder for uploads
     },
     filename: function (req, file, cb) {
         const ext = path.extname(file.originalname);
