@@ -12,12 +12,27 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         const ext = path.extname(file.originalname);
-        cb(null, Date.now() + ext); // Create a unique filename
+        cb(null, Date.now() + '-' + ext); // Create a unique filename
     }
 });
 
+const fileFilter = (req, file, cb) => {
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    if(!allowedTypes.includes(file.mimetype)) {
+        return cb(new Error('Invalid file type. Only JPEG, PNG, and GIF are allowed.'), false);
+    }
+    if (file.size > 5 * 1024 * 1024) {
+        return cb(new Error('File size exceeds 5MB limit.'), false);
+    }
+    cb(null, true);
+};
+
 // Initialize multer with the storage configuration
-const upload = multer({ storage: storage });
+const upload = multer({
+    storage: storage, 
+    fileFilter: fileFilter,
+    limits: { fileSize: 5 * 1024 * 1024}
+});
 
 router.get("/", imageController.getAllImages);
 router.get("/:id", imageController.getImageById);

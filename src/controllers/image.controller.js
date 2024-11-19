@@ -44,6 +44,10 @@ exports.getImagesByUserId = (req, res) => {
 
 exports.uploadImage = (req, res) => {
     try {
+        if (!req.file) {
+            return res.status(400).json({ message: "No file uploaded" });
+        }
+
         let { userId } = req.body;
 
         // Validate userId
