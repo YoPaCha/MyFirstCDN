@@ -87,8 +87,10 @@ exports.uploadImage = async (req, res) => {
                 let image = sharp(originalImagePath).resize(size.width, size.height);
 
                 // Apply quality only for formats that support it
-                if (format === 'jpeg' || format === 'webp') {
-                    image = image.toFormat(format).quality(80);  // Apply compression for JPEG and WebP
+                if (format === 'jpeg') {
+                    image = image.toFormat(format).jpeg({quality : 80});
+                } else if (format === 'webp') {
+                    image = image.toFormat(format).webp({quality : 80});
                 } else {
                     image = image.toFormat(format);  // PNG doesn't need quality adjustment
                 }
